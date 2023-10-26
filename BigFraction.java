@@ -74,7 +74,6 @@ public class BigFraction {
 	/**
 	 * Express this fraction as a double.
 	 */
-
 	public double doubleValue() {
 		return this.num.doubleValue() / this.denom.doubleValue();
 	} // doubleValue()
@@ -86,6 +85,11 @@ public class BigFraction {
 		return this;
 	}
 
+	/*
+	 * Input: string
+	 * Output: BigFraction
+	 * Takes a string of format similar to "1/2" or "1" and converts it to a BigFraction
+	 */
 	public BigFraction toFraction(String str) {
 		int numer;
 		int denomer;
@@ -100,6 +104,10 @@ public class BigFraction {
 		return new BigFraction(numer, denomer);
 	}
 
+	/*
+	 * Input: BigFraction to multiply
+	 * OutPut: BigFraction multiplied by its input
+	 */
 	public BigFraction multiply1(BigFraction mult1) {
 		BigInteger numerator = (this.num.multiply(mult1.num));
 		BigInteger denomenator = (this.denom.multiply(mult1.denom));
@@ -124,26 +132,38 @@ public class BigFraction {
 		return new BigFraction(resultNumerator, resultDenominator);
 	}// add(Fraction)
 
+	/*
+	 * Input: BigFraction 
+	 * Output: BigFraction
+	 * subtracts subme from the this fraction
+	 */
 	public BigFraction subtrac(BigFraction subme) {
 		BigInteger numerator;
 		BigInteger denominator;
-
 		denominator = this.denom.multiply(subme.denom);
 		numerator = (this.num.multiply(subme.denom)).subtract(subme.num.multiply(this.denom));
 
 		return new BigFraction(numerator, denominator);
 	}// subtract
 
+	/*
+	 * Input: BigFraction 
+	 * Output: BigFraction
+	 * Divides dividme from the this fraction
+	 */
 	public BigFraction divide1(BigFraction dividme) {
-
 		BigInteger numerator = (this.num.multiply(dividme.denom));
 		BigInteger denomenator = (this.denom.multiply(dividme.num));
 
 		return new BigFraction(numerator, denomenator);
 	}
 
+	/*
+	 * Input: BigFraction 
+	 * Output: BigFraction
+	 * takes in a bigfrac and simplifies it into simpliest terms
+	 */
 	public BigFraction simplify(BigFraction simplif) {
-
 		BigInteger numerator = simplif.numerator();
 		BigInteger denomenator = simplif.denominator();
 		BigInteger gc = gcd(numerator, denomenator);
@@ -153,15 +173,18 @@ public class BigFraction {
 		return new BigFraction(numerator, denomenator);
 	}
 
+	/*
+	 * Input: BigInteger, BigInteger 
+	 * Output: BigInteger
+	 * takes in two bigints and finds their greatest common denominator. To be used with simplify
+	 */
 	public BigInteger gcd(BigInteger x, BigInteger y) {
 		BigInteger zero;
 		zero = BigInteger.valueOf(0);
 		if (y == zero) {
 			return x; // this will be the gcd when returned
 		}
-
 		return gcd(y, x.mod(y)); // recursion to find the greatest common denominator
-
 	}// greatest common denominator
 
 	/**
@@ -182,14 +205,21 @@ public class BigFraction {
 	 * Convert this fraction to a string for ease of printing.
 	 */
 	public String toString() {
+		BigInteger numer = this.numerator();
+		BigInteger denom = this.denominator();
 		// Special case: It's zero
 		if (this.num.equals(BigInteger.ZERO)) {
 			return "0";
 		} // if it's zero
 
+		if(numer.compareTo(denom) == 0){ // if num and denoms are the same then prints simple form
+			return numer.toString();
+		}
+		if(denom.equals(BigInteger.valueOf(1))){ // if denom is zero, doesn't print it
+			return numer.toString();
+		}
 		// Lump together the string represention of the numerator,
 		// a slash, and the string representation of the denominator
-		// return this.num.toString().concat("/").concat(this.denom.toString());
 		return this.num + "/" + this.denom;
 	} // toString()
 

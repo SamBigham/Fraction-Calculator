@@ -21,16 +21,16 @@ public class InteractiveCalculator {
 		BFCalculator b1 = new BFCalculator();
 		b1.setFrac();
 		int p = 0;
-		boolean quick; // whether this function will use scanner or take in command line arguments from quick calculator
-		if(args.length == 0) {
+		boolean quick; // whether this function will use scanner or take in command line arguments from
+						// quick calculator
+		if (args.length == 0) {
 			quick = false;
-			p = 100; 
-		}else {
+			p = 100;
+		} else {
 			quick = true;
 		}
-		
-		do {
 
+		do {
 			pen.println("Input something: ");
 			if (args.length == 0) {
 				input = myObj.nextLine(); // Read user input
@@ -46,15 +46,19 @@ public class InteractiveCalculator {
 				leter = 'a'; // default
 			}
 			if (!input.equalsIgnoreCase("QUIT") && !isStore.equalsIgnoreCase("store")) {
-				ansresult = b1.evaluate(input); // this is where all the heavy lifting takes place
-				b1.lastresult(ansresult); // stores last result
-				pen.println("your input was: " + input);
-				pen.println("your result is: " + ansresult);
+				try {
+					ansresult = b1.evaluate(input); // this is where all the heavy lifting takes place
+					b1.lastresult(ansresult); // stores last result
+					pen.println("your input was: " + input);
+					pen.println("your result is: " + ansresult);
+				} catch (Exception e) {
+					System.out.println("***ERROR WITH INPUT***\n" + e + "\n***Please try again***");
+				}
 			} else if (isStore.equalsIgnoreCase("store")) { // if input is store
 				pen.println("storing " + leter);
 				b1.store(leter);
 			}
-			if(args.length != 0) {
+			if (args.length != 0) {
 				if (p < args.length) { // applies for when command line arguments are being used
 					quick = false;
 				} else {
